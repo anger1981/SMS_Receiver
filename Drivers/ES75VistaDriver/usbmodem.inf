@@ -1,0 +1,97 @@
+; Windows Modem Setup File
+; Copyright (c) 1993-1999 Microsoft Corporation
+; Copyright (c) 2005 Siemens AG
+
+[Version]
+Signature=$CHICAGO$
+Class=Modem
+Provider=%Siemens%                               
+CLASSGUID={4D36E96D-E325-11CE-BFC1-08002BE10318} ;Fixed GUID for ALL Modem INFs.
+LayoutFile=layout.inf				 ;For access to usbser.sys
+DriverVer=04/02/2005,1.00.0000.3                 ;Driver [INF file] version shown in Modem properties / Driver. No
+
+[DestinationDirs]
+FakeModemCopyFileSection=12
+DefaultDestDir = 12
+
+[Manufacturer]
+%Siemens%=Models
+
+[ControlFlags]
+;none
+
+[Models]
+%Siemens01% = Modem1, USB\VID_0681&PID_0034       ;Identifies Vendor = Siemens WM, Product = Modem
+
+[Modem1.NT]
+include=MDMcpq.INF                             ;file containing generic 'Responses' lines.
+CopyFiles=FakeModemCopyFileSection
+AddReg = All, MfgAddReg, Modem1.AddReg, MDMGL006.VERBOSE
+
+[Modem1.NT.Services]
+include=MDMcpq.INF 
+AddService=usbser, 0x00000000, LowerFilter_Service_Inst
+
+[Modem1.NT.HW]
+include=MDMcpq.INF 
+AddReg=LowerFilterAddReg
+
+[LowerFilterAddReg]
+HKR,,"LowerFilters",0x00010000,"usbser"
+
+[LowerFilter_Service_Inst]
+DisplayName=%USBFilterString%
+ServiceType= 1
+StartType  = 3
+ErrorControl = 0
+ServiceBinary = %12%\usbser.sys
+
+[FakeModemCopyFileSection]
+usbser.sys,,,0x20
+
+[All]
+HKR,,DeviceType,1,01					;External modem
+HKR,,FriendlyDriver,0,Unimodem.vxd
+HKR,,DevLoader,0,*vcomm
+HKR,,ConfigDialog,0,modemui.dll
+HKR,,EnumPropPages,0,modemui.dll,EnumPropPages
+HKR,,PortSubClass,1,02
+HKR, Init,      1,, "AT<cr>"
+HKR, Responses, "<cr><lf>OK<cr><lf>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>ERROR<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+
+[Modem1.AddReg]
+HKR,, Properties, 1, 00,00,00,00, FF,00,00,00, 00,00,00,00, 00,00,00,00, 00,00,00,00, 00,01,00,00, 00,84,03,00, 00,4B,00,00
+;Modem properties:  |            |            |            |            |            |            |            |
+
+[Strings]
+MS1 = "Microsoft"
+USBFilterString ="USB Modem Driver"
+Siemens = "Siemens AG"
+Siemens01 = "Siemens AG WM USB Modem"
+
+[MfgAddReg]
+HKR,Init,2,,   "AT&FE0Q0V1&C1&D2S0=0<cr>"
+HKR,Monitor,1,,"ATS0=0<cr>"
+HKR,Monitor,2,,"None"
+HKR,Hangup,1,,"ATH<cr>"
+HKR,Hangup,2,,"AT+CGATT=0<cr>" ;dodalem
+HKR,, Reset,, "ATZ<cr>"
+HKR,Answer,1,,"ATA<cr>"
+HKR,Settings,Prefix,,"AT"
+HKR,Settings,Terminator,,"<cr>"
+HKR,Settings,DialPrefix,,"D"
+HKR,Settings,DialSuffix,,";"
+HKR,Settings,Pulse,,"P"
+HKR,Settings,Tone,,"T"
+HKR,Settings,CallSetupFailTimer,,"S7=<#>"
+HKR,, InactivityScale, 1, 3c,00,00,00
+
+[SourceDisksNames]
+;none
+
+[SourceDisksFiles]
+;none
+
+
+

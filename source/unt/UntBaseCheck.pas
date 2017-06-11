@@ -1,0 +1,68 @@
+unit UntBaseCheck; 
+
+
+interface
+uses untModem, SysUtils;
+
+function Account_Phone(sms_text: string): TArrayOfString;
+function StrIsHex(source: string): Boolean;
+
+implementation
+
+function Account_Phone(sms_text: string): TArrayOfString;
+var
+  i, res_ind, nn: Integer;
+
+    procedure AddToResult(Value: String);
+      var
+      c: Integer;
+    begin
+      c := Length(Result);
+      SetLength(Result, c + 1);
+      Result[c] := Value;
+    end;
+
+begin
+
+res_ind := 0;
+AddToResult('');
+
+for i := 1 to length(sms_text) do
+begin
+try
+nn := StrToInt(sms_text[i]);
+except
+    on Exception : EConvertError do
+      begin
+      if length(Result[res_ind]) > 0 then
+        begin
+        res_ind := res_ind + 1;
+        AddToResult('');
+        end;
+      continue;
+      end;
+end;
+      result[res_ind] := result[res_ind] + sms_text[i];
+end;
+AddToResult('');
+end;
+
+function StrIsHex(source: string): Boolean;
+var
+  i, n: Integer;
+  c: Char;
+  s: string;
+begin
+  result := true;
+for i:=1 to Length(source) do
+  begin
+    if (pos(source[i], '0123456789ABCDEF') = 0) then
+       begin
+       result := false;
+       break;
+       end;
+  end; 
+end;
+
+end.
+ 

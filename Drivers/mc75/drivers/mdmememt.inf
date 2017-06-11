@@ -1,0 +1,142 @@
+
+[Version]
+LayoutFile=mdmemem.inf
+Signature="$CHICAGO$"
+Class=Modem
+ClassGUID={4D36E96D-E325-11CE-BFC1-08002BE10318}
+Provider=%Mfg%
+DriverVer=02/20/2003
+
+[Manufacturer]
+; The string below will appear in the Install New Modem wizard's list of manufacturers
+%Siemens% = Siemens
+
+[Siemens]
+; This list will appear in the Install New Modem wizard's list of modems
+%Modem%  = Modem, IRZ75    ; "Emem Terminal Modem"
+
+
+[Strings]
+; This section lists strings that are used by the Modems control panel applet
+; and the Install New Modem wizard.
+Mfg    = "Siemens"
+Modem   = "Siemens MC75 Terminal"
+
+[Modem.ntx86]
+AddReg=W2KPat.AddReg, All, External, VerboseResultCodes,GSM_PROTOCOL, FAXCLASS, EMEM.AddReg
+
+[Modem]
+AddReg=All, External, VerboseResultCodes, GSM_PROTOCOL, FAXCLASS, EMEM.AddReg
+
+[All]
+
+HKR,,FriendlyDriver,,unimodem.vxd
+HKR,,DevLoader,,*vcomm
+HKR,,PortSubClass,1,02
+HKR,,ConfigDialog,,modemui.dll
+HKR,,EnumPropPages,,"modemui.dll,EnumPropPages"
+HKR, Init,      1,, "AT<cr>"
+HKR, Monitor,   1,, "ATS0=0<cr>"
+HKR, Monitor,   2,, "None"
+HKR, Hangup,    1,, "ATH<cr>"
+HKR, Hangup,    2,,"AT+CGATT=0<cr>" ; appended
+HKR, Answer,    1,, "ATA<cr>"
+HKR,, Reset,, "AT&F<cr>"
+HKR, Settings, Prefix,, "AT"
+HKR, Settings, Terminator,, "<cr>"
+HKR, Settings, DialPrefix,, "D"
+HKR, Settings, DialSuffix,, ""
+HKR, Settings, Pulse,, "P"
+HKR, Settings, Tone,, "T"
+HKR, Settings, FlowControl_Off,,  "\Q0"
+HKR, Settings, FlowControl_Hard,, "\Q3"
+HKR, Settings, FlowControl_Soft,, "\Q1"
+HKR, Settings, CallSetupFailTimer,, "S7=<#>"
+
+
+[EXTERNAL]
+HKR,, DeviceType, 1, 01
+
+[GSM_PROTOCOL]
+HKR, Protocol\GSM\ANALOG_RLP, 1,,"AT+CBST=0,0,1<cr>"
+HKR, Protocol\GSM\V110_2DOT4K, 1,,"AT+CBST=68,0,1<cr>"
+HKR, Protocol\GSM\V110_4DOT8K, 1,,"AT+CBST=70,0,1<cr>"
+HKR, Protocol\GSM\V110_9DOT6K, 1,,"AT+CBST=71,0,1<cr>"
+HKR, Protocol\GSM\V110_14DOT4K, 1,,"AT+CBST=75,0,1<cr>"
+HKR, Protocol\GSM\GPRS, 1,,"AT<cr>"
+
+[FAXCLASS]
+HKR, Fax, ResetCommand,, "ATE0V1Q0"
+HKR,, FClass, 1, 0B,00,00,00
+HKR, Fax, Class1DTESpeed,, "AUTO"
+HKR, Fax, FixModemClass,, "2"
+HKR, Fax, FixSerialSpeed,,"19200"
+HKR, Fax, SerialSpeedInit,, "19200"
+HKR, Fax\Class1\AdaptiveAnswer, SerialSpeedFaxDetect,, "19200"
+
+
+[VerboseResultCodes]
+HKR, Responses, "<cr><lf>OK<cr><lf>",          1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>RING<cr><lf>",        1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: FAX<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: REL ASYNC<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO CARRIER<cr><lf>",  1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>ERROR<cr><lf>",       1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO DIALTONE<cr><lf>", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>BUSY<cr><lf>",        1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>NO ANSWER<cr><lf>",   1, 07, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT<cr><lf>",     1, 02, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "0<cr>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "1<cr>", 1, 02, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "2<cr>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "3<cr>", 1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "4<cr>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "6<cr>", 1, 05, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "7<cr>", 1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "8<cr>", 1, 07, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "10<cr>", 1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "30<cr>", 1, 02, 00, C0,12,00,00, 00,00,00,00
+HKR, Responses, "32<cr>", 1, 02, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "47<cr>", 1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "48<cr>", 1, 02, 00, C0,12,00,00, 00,00,00,00
+HKR, Responses, "49<cr>", 1, 02, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "33<cr>", 1, 02, 00, 40,38,00,00, 00,00,00,00
+HKR, Responses, "50<cr>", 1, 02, 00, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT<cr><lf>",         1, 02, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400<cr><lf>",    1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800<cr><lf>",    1, 02, 00, C0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600<cr><lf>",    1, 02, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400<cr><lf>",   1, 02, 00, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800<cr><lf>",   1, 02, 00, A0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200<cr><lf>",   1, 02, 00, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 21600<cr><lf>",   1, 02, 00, 60,54,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 24000<cr><lf>",   1, 02, 00, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 26400<cr><lf>",   1, 02, 00, 20,67,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 28800<cr><lf>",   1, 02, 00, 80,70,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 38400<cr><lf>",   1, 02, 00, 00,96,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 57600<cr><lf>",   1, 02, 00, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 115200<cr><lf>",  1, 02, 00, 00,C2,01,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400/RLP<cr><lf>",    1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800/RLP<cr><lf>",    1, 02, 00, C0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600/RLP<cr><lf>",    1, 02, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 14400/RLP<cr><lf>",   1, 02, 00, 40,38,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 16800/RLP<cr><lf>",   1, 02, 00, A0,41,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 19200/RLP<cr><lf>",   1, 02, 00, 00,4B,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 21600/RLP<cr><lf>",   1, 02, 00, 60,54,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 24000/RLP<cr><lf>",   1, 02, 00, C0,5D,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 26400/RLP<cr><lf>",   1, 02, 00, 20,67,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 28800/RLP<cr><lf>",   1, 02, 00, 80,70,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 38400/RLP<cr><lf>",   1, 02, 00, 00,96,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 57600/RLP<cr><lf>",   1, 02, 00, 00,E1,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 115200/RLP<cr><lf>",  1, 02, 00, 00,C2,01,00, 00,00,00,00
+
+
+[EMEM.AddReg]
+HKR,, Properties, 1, 00,00,00,00, 3C,00,00,00, 00,00,00,00, 00,00,00,00, 00,00,00,00, 30,00,00,00, 00,84,03,00, 00,C2,01,00
+HKR,, ConfigDelay, 1, b8,0b,00,00
+HKR,, DCB, 1, 1C,00,00,00, 00,C2,01,00, 15,20,00,00, 00,00, 0a,00, 0a,00, 08, 00, 00, 11, 13, 00, 00, 00
+
+
+
+
+
